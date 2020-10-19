@@ -64,17 +64,26 @@
 			//Cette fonction va masquer les éléments de type p[id]
 			//Et préparer les évents des évènements de type h3[id]
 			{
-				var mesContenus = document.querySelectorAll('p[id]');
-				for (var i = 0; i < mesContenus.length; i++) {
+				var mesContenus = document.querySelectorAll('p[id]');//Regarder les méthodes querySelector
+				Object.keys(mesContenus).forEach(key => 
+				{
+					mesContenus[key].style.visibility = "hidden";
+				});
+				/*for (var i = 0; i < mesContenus.length; i++) {
 					mesContenus[i].style.visibility = "hidden";
-				}
+				}*/
 
 				var mesTitres = document.querySelectorAll('h3[id]');
-				for (var i = 0; i < mesTitres.length; i++) {
+				/*for (var i = 0; i < mesTitres.length; i++) {
 					//console.log(mesTitres[i]);
 					mesTitres[i].addEventListener("mouseover",Afficher,false);
 					mesTitres[i].addEventListener("mouseout",Masquer,false);
-				}
+				}*/
+				Object.keys(mesTitres).forEach(key => 
+				{
+					mesTitres[key].addEventListener("mouseover",Afficher,false);
+					mesTitres[key].addEventListener("mouseout",Masquer,false);
+				});
 			}
 		</script>
 

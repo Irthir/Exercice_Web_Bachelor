@@ -33,33 +33,19 @@
 
              //Itération sur le tableau par rapport à la clé
 
-             Object.keys(tabEtudiant).forEach(key => {
-
-                                                                                                                                       console.log(key, tabEtudiant[key]);
-
-                                                                                                                         });
+             Object.keys(tabEtudiant).forEach(key => {console.log(key, tabEtudiant[key]);});
 
  
 
              //Afficher les valeurs
 
-             Object.values(tabEtudiant).forEach(val => {
-
-                                                                                                                                       console.log(val);
-
-                                                                                                                        });
+             Object.values(tabEtudiant).forEach(val => {console.log(val);});
 
  
 
              //Afficher selon couple clé valeur défini
 
-             Object.entries(tabEtudiant).forEach(entry => {
-
-                                                                                                                                         const [key, value] = entry;
-
-                                                                                                                                         console.log(key, value);
-
-                                                                                                                                       });
+             Object.entries(tabEtudiant).forEach(entry => {const [key, value] = entry;console.log(key, value);});
 
  
 
@@ -81,11 +67,7 @@
 
               */
 
-              Object.keys(tabEtudiant).forEach(key => {
-
-                                         document.write("<option value=" + key + ">" + tabEtudiant[key] + "</option>");
-
-             });
+              Object.keys(tabEtudiant).forEach(key =>{document.write("<option value=" + key + ">" + tabEtudiant[key] + "</option>");});
 
  
 

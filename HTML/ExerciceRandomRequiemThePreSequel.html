@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<HTML>
+
+	<HEAD> <!--Information de configuration : encodage, langue,...-->
+		<!--Méthode d'insertion du style dans le HEAD-->
+		<style type="text/css">
+		</style>
+		<!--Appelle du style par un fichier externe.-->
+		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.css" charset="utf-8"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../Contenus/images/cirno9.jpg"/>
+		<meta charset="utf-8"/>
+		<lang="fr"/>
+		<script type="text/javascript">
+			var dDebut=null; //Variable de stockage pour la date de départ du jeu.
+			var nEssaie=0; //Variable de stockage du nombre d'essaie du joueur.
+			var tTemps=null; //Variable de stockage du temps écoulé.
+			var RandomInt=0; //Variable de stockage du nombre aléatoire généré.
+			var bDebut=false; //Variable de vérification si il s'agit du premier input du joueur.
+			var divResultat = null; //Variable de référence pour le div servant à l'affichage du résultat.
+			var interval=null; //Variable de référence pour l'interval qui permet d'actualiser le temps chaque seconde.
+			const tTempsLimite=100; //Constante arbitraire pour le temps maximal alloué au joueur.
+
+			var boolCroissant=true;
+			var boolFacile=true;
+
+			function SetTemps()
+			//BUT : Mettre à jour le timer pour l'utilisateur.
+			//ENTREE : L'heure de l'appareil et le div d'affichage du timer.
+			//SORTIE : L'actualisation du timer à chaque appel de cette fonction.
+			{
+				if (dDebut ==null)
+				{
+					dDebut=new Date();
+				}
+
+				var dDate = new Date(); //Récupération de la date au moment où cette fonction tourne.
+
+				if (boolCroissant)
+				{
+					//Reprise du code de la version 1
+					tTemps=Math.floor((dDate-dDebut)/1000)
+					document.getElementById('Timer').innerHTML = tTemps;
+				}
+				else
+				{
+					//Reprise du code de la version 2 (Requiem)
+					tTemps=tTempsLimite-Math.floor((dDate-dDebut)/1000);
+					document.getElementById('Timer').innerHTML = tTemps;
+
+					if (tTemps<=0)
+					{
+						ivResultat.innerHTML=("C'est perdu, le temps est écoulé !");
+						clearInterval(interval);
+						Terminer();
+					}
+				}
+			}
+
+			function init()
+			//BUT : Générer le nombre Random Int compris entre 1 et 100 pour le jeu du juste nombre.
+			{
+				RandomInt = Math.floor(Math.random() * (100)+1); //Je suis contre l'acceptation du zéro.
+			}
+
+			function PlusOuMoins(inputJoueur)
+			//BUT : Gérer le jeu à chaque tentative du joueur.
+			//ENTREE : La valeur entrée par le joueur.
+			//SORTIE : Plus, Moins ou Gagné selon l'entrée du joueur.
+			{
+				//console.log(inputJoueur.value);
+				if (!bDebut)
+				//Dans le cas où cette fonction se lance pour la première fois il faut initialiser l'interval du timer.
+				{
+					interval=setInterval(SetTemps,1000);
+					SetTemps();
+					bDebut=true;
+				}
+
+				if(divResultat==null)
+				//Si nous n'avons pas le div d'affichage des résultats on le récupère, si on l'a on le garde.
+				{
+					divResultat = document.getElementById('Resultat');
+				}
+
+				nEssaie++;
+
+				if (boolFacile)
+				{
+					//Reprise du code de la version 1
+					if(inputJoueur.value>RandomInt)
+					{
+						divResultat.innerHTML=("C'est moins.");
+					}
+					else if(inputJoueur.value<RandomInt)
+					{
+						divResultat.innerHTML=("C'est plus.");
+					}
+					else if(inputJoueur.value==RandomInt)
+					{
+						divResultat.innerHTML=("C'est gagné !<br/>Nombre d'essais : "+ nEssaie+"<br/>Temps mis : "+ tTemps+" secondes.");
+						clearInterval(interval);
+						Terminer();
+					}
+				}
+				else
+				{
+					//Reprise du code de la version 2 (Requiem)
+
+					if(inputJoueur.value!=RandomInt)
+					{
+						divResultat.innerHTML=("C'est faux.");
+					}
+					else if(inputJoueur.value==RandomInt)
+					{
+						divResultat.innerHTML=("C'est gagné !<br/>Nombre d'essais : "+ nEssaie+"<br/>Temps mis : "+ (tTempsLimite-tTemps) +" secondes.");
+						clearInterval(interval);
+						Terminer();
+					}
+				}
+				inputJoueur.value="";
+			}
+
+			function Demarrer()
+			{
+				var monInput = document.getElementById("input");
+				monInput.disabled=false;
+
+				var boutonDemarrer = document.getElementById("Demarrer");
+				boutonDemarrer.disabled = true;
+
+				var Radio1 = document.getElementById('croissant');
+				var Radio2 = document.getElementById('decroissant');
+				var Radio3 = document.getElementById('maximum');
+				var Radio4 = document.getElementById('minimum');
+				
+				Radio1.disabled=true;
+				Radio2.disabled=true;
+				Radio3.disabled=true;
+				Radio4.disabled=true;
+
+				if (Radio1.checked)
+					boolCroissant=true;
+				else
+					boolCroissant=false;
+
+				if (Radio3.checked)
+					boolFacile=true;
+				else
+					boolFacile=false;
+
+				init(); //On lance l'aléatoire et on génère notre nombre mystère.
+			}
+
+			function Terminer()
+			{
+				var monInput = document.getElementById("input");
+				monInput.disabled=true;
+
+				var boutonDemarrer = document.getElementById("Demarrer");
+				boutonDemarrer.disabled = false;
+
+				var Radio1 = document.getElementById('croissant');
+				var Radio2 = document.getElementById('decroissant');
+				var Radio3 = document.getElementById('maximum');
+				var Radio4 = document.getElementById('minimum');
+				
+				Radio1.disabled=false;
+				Radio2.disabled=false;
+				Radio3.disabled=false;
+				Radio4.disabled=false;
+
+				//On réinitialise les variables de départ
+				dDebut=null;
+				nEssaie=0;
+				tTemps=null;
+				RandomInt=0;
+				bDebut=false;
+				interval=null;
+			}
+
+		</script>
+
+		<TITLE>Le Juste Prix</TITLE>
+	</HEAD>
+
+	<BODY>
+		<header><!--Identité : Logo, bannière--></header>
+		<h2>Configurations du Jeu</h2>
+
+		<h4>Direction du timer :</h4>
+		<div>
+			<input type="radio" name="DirectionTimer" value="croissant" id="croissant" checked="checked" tag="RadioBouton"> <label for="croissant">-Chronomètre</label>
+		</div>
+		<div>
+			<input type="radio" name="DirectionTimer" value="decroissant" id="decroissant" tag="RadioBouton"> <label for="decroissant">-Compte à rebours</label>
+		</div>
+
+		<h4>Difficulté des indications : </h4>
+		<div>
+			<input type="radio" name="Indication" value="maximum" id="maximum" checked="checked" tag="RadioBouton"> <label for="maximum">-Facile</label>
+		</div>
+		<div>
+			<input type="radio" name="Indication" value="minimum" id="minimum" tag="RadioBouton"> <label for="maximum">-Difficile</label>
+		</div>
+
+		<h2>Essayez de deviner le nombre mystère compris entre 1 et 100</h2>
+
+		<button onclick="Demarrer()" id="Demarrer">Commencer :</button>
+
+		<h3 id="Timer">Ici s'affichera le Timer</h3>
+		
+		<input type="number" name="input" step="1" id="input" disabled="true" onchange="PlusOuMoins(this)">
+		
+		<div id="Resultat">
+			Rentrez une valeur pour commencer.
+		</div>
+
+		<footer>
+			Contact : r.schlotter@ludus-académie.com<br/>
+			Téléphone : +33624202366
+		</footer>	
+	</BODY>
+</HTML>
+
+<!--La machine génère un nombre aléatoire entre 0 et 100 et un timer commence quand il clique sur jouer.
+Ou quand il saisit une valeur.
+A la fin on note le chrono et le nombre de tentatives.-->
