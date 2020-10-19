@@ -44,13 +44,47 @@
 		<link rel="shortcut icon" type="image/x-icon" href="../Contenus/images/cirno9.jpg"/>
 		<meta charset="utf-8"/>
 		<lang="fr"/>
+		<script type="text/javascript">
+
+			function Afficher(event)
+			{
+				var strID = event.srcElement.id;
+				document.getElementById(strID.substring(1)).style.visibility = "visible";
+				//console.log(strID.substring(1));
+			}
+
+			function Masquer(event)
+			{
+				var strID = event.srcElement.id;
+				document.getElementById(strID.substring(1)).style.visibility = "hidden";
+				//console.log(strID.substring(1));
+			}
+
+			function init()
+			//Cette fonction va masquer les éléments de type p[id]
+			{
+				var mesContenus = document.querySelectorAll('p[id]');
+				for (var i = 0; i < mesContenus.length; i++) {
+					mesContenus[i].style.visibility = "hidden";
+				}
+
+				var mesTitres = document.querySelectorAll('h3[id]');
+				for (var i = 0; i < mesTitres.length; i++) {
+					//console.log(mesTitres[i]);
+					mesTitres[i].addEventListener("mouseover",Afficher,false);
+					mesTitres[i].addEventListener("mouseout",Masquer,false);
+				}
+				
+			}
+		</script>
+
 		<TITLE>Exercice Premier Jour</TITLE>
 	</HEAD>
 
-	<BODY>
+	<BODY onload="init();">
 		<header><!--Identité : Logo, bannière--></header>
 		
-			<script type="text/javascript">
+			<!--<script type="text/javascript">
 				var tabJeux = new Array(20);
 				tabJeux =['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T'];
 				var tabGenre = new Array(20)
@@ -66,7 +100,6 @@
 						document.write("<div class='jeux'>"+'Jeu : '+tabJeux[i]+"</div>");
 					document.write("</div>");
 				}
-				//document.getElementsByClassName(\'genre\').style = \'visibility: hidden;\'
 				function Masquer()
 				{
 					var MesGenres = document.getElementsByClassName("genre");
@@ -78,9 +111,20 @@
 				}
 				//document.write('<button type="button" class="bouton" onclick="Masquer()">Masquer</button>');
 				document.write('<span>Masquer : </span><input type="checkbox" id="maRadio" onchange="Masquer()">');
-			</script>
+			</script>-->
 			
 
+			<h3 id="mContenu1">Contenu1</h3> 
+			<h3 id="mContenu2">Contenu2</h3>
+
+			<p id="Contenu1">
+				"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+				"无人爱苦，亦无人寻之欲之，乃因其苦..."
+			</p>
+
+			<p id="Contenu2">
+				如今互联网提供各种各样版本的Lorem Ipsum段落，但是大多数都多多少少出于刻意幽默或者其他随机插入的荒谬单词而被篡改过了。如果你想取用一段Lorem Ipsum，请确保段落中不含有令人尴尬的不恰当内容。所有网上的Lorem Ipsum生成器都倾向于在必要时重复预先准备的部分，然而这个生成器则是互联网上首个确切的生成器。它使用由超过200个拉丁单词所构造的词典，结合了几个模范句子结构，来生成看起来恰当的Lorem Ipsum。因此，生成出的结果无一例外免于重复，刻意的幽默，以及非典型的词汇等等。
+			</p>
 
 		<footer>
 			Contact : r.schlotter@ludus-académie.com<br/>
