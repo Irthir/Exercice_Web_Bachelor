@@ -69,20 +69,10 @@
 				//document.getElementsByClassName(\'genre\').style = \'visibility: hidden;\'
 				function Masquer()
 				{
-					var MaCheckBox = document.getElementById("maCheck");
-					/*console.log(MaCheckBox);
-					console.log(MaCheckBox.checked);*/
 					var MesGenres = document.getElementsByClassName("genre");
 					for (var i = MesGenres.length - 1; i >= 0; i--)
 					{
-						if (!MaCheckBox.checked)
-						{
-							MesGenres[i].style.visibility = 'visible';
-						}
-						else
-						{
-							MesGenres[i].style.visibility = 'hidden';
-						}
+						MesGenres[i].style.visibility =='visible' ? MesGenres[i].style.visibility ='hidden' : MesGenres[i].style.visibility ='visible';
 					}
 					console.log(MesGenres);
 				}
