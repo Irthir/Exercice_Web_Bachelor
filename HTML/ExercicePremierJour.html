@@ -62,16 +62,20 @@
 				for (var i = 0; i < 20; i++)
 				{
 					document.write("<div class='ligne'>");
-					document.write("<div class='genre'>"+'Genre : '+tabGenre[i]+"</div><div class='jeux'>"+'Jeu : '+tabJeux[i]+"</div>");
+						document.write("<div class='genre' style='visibility:visible;'>"+'Genre : '+tabGenre[i]+"</div>");
+						document.write("<div class='jeux'>"+'Jeu : '+tabJeux[i]+"</div>");
 					document.write("</div>");
 				}
 				//document.getElementsByClassName(\'genre\').style = \'visibility: hidden;\'
 				function Masquer()
 				{
+					var MaCheckBox = document.getElementById("maCheck");
+					/*console.log(MaCheckBox);
+					console.log(MaCheckBox.checked);*/
 					var MesGenres = document.getElementsByClassName("genre");
 					for (var i = MesGenres.length - 1; i >= 0; i--)
 					{
-						if (MesGenres[i].style.visibility == 'hidden')
+						if (!MaCheckBox.checked)
 						{
 							MesGenres[i].style.visibility = 'visible';
 						}
@@ -82,8 +86,10 @@
 					}
 					console.log(MesGenres);
 				}
-				document.write('<button type="button" class="bouton" onclick="Masquer()">Masquer</button>');
+				//document.write('<button type="button" class="bouton" onclick="Masquer()">Masquer</button>');
+				document.write('<span>Masquer : </span><input type="checkbox" id="maRadio" onchange="Masquer()">');
 			</script>
+			
 
 
 		<footer>
