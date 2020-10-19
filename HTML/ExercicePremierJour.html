@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<HTML>
+
+	<HEAD> <!--Information de configuration : encodage, langue,...-->
+		<!--Méthode d'insertion du style dans le HEAD-->
+		<style type="text/css">
+			.genre
+			{
+				text-align:center;
+				display: inline;
+				border:solid;
+				border-right:hidden;
+				width:20%;
+				margin: none;
+				padding: none;
+			}
+			.jeux
+			{
+				text-align:center;
+				display: inline;
+				border:solid;
+				width:20%;
+				margin: none;
+				padding: none;
+			}
+			.ligne
+			{
+				margin-left: auto;
+				margin-right: auto;
+				width : 30%;
+				text-align:center;
+				display: flex;
+			}
+			.bouton
+			{
+				margin-left: auto;
+				margin-right: auto;
+				width: 10%;
+				left: 300px;
+			}
+		</style>
+		<!--Appelle du style par un fichier externe.-->
+		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.CSS" charset="utf-8"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../Contenus/images/cirno9.jpg"/>
+		<meta charset="utf-8"/>
+		<lang="fr"/>
+		<TITLE>Exercice Premier Jour</TITLE>
+	</HEAD>
+
+	<BODY>
+		<header><!--Identité : Logo, bannière--></header>
+		
+			<script type="text/javascript">
+				var tabJeux = new Array(20);
+				tabJeux =['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T'];
+				var tabGenre = new Array(20)
+				tabGenre=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+				console.log(typeof(tabGenre));
+				console.log(Array.isArray(tabGenre));
+				console.table(tabGenre);
+
+				for (var i = 0; i < 20; i++)
+				{
+					document.write("<div class='ligne'>");
+					document.write("<div class='genre'>"+'Genre : '+tabGenre[i]+"</div><div class='jeux'>"+'Jeu : '+tabJeux[i]+"</div>");
+					document.write("</div>");
+				}
+				//document.getElementsByClassName(\'genre\').style = \'visibility: hidden;\'
+				function Masquer()
+				{
+					var MesGenres = document.getElementsByClassName("genre");
+					for (var i = MesGenres.length - 1; i >= 0; i--)
+					{
+						if (MesGenres[i].style.visibility == 'hidden')
+						{
+							MesGenres[i].style.visibility = 'visible';
+						}
+						else
+						{
+							MesGenres[i].style.visibility = 'hidden';
+						}
+					}
+					console.log(MesGenres);
+				}
+				document.write('<button type="button" class="bouton" onclick="Masquer()">Masquer</button>');
+			</script>
+
+
+		<footer>
+			Contact : r.schlotter@ludus-académie.com<br/>
+			Téléphone : +33624202366
+		</footer>	
+	</BODY>
+</HTML>

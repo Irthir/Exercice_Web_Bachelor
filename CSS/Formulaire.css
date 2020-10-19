@@ -1,0 +1,123 @@
+body
+{
+	background-color : #002233;
+	color:#ffffff;
+	font: 1.2em "Calibri", sans-serif;
+}
+
+main
+{
+	margin: 5%;
+	margin-top: 0;
+	padding: 1%;
+	border-right: black solid 1px;
+	border-left: black solid 1px;
+	border-color: #48545d;
+	background-color : #293744;
+}
+
+footer
+{
+	display:flex;
+	justify-content: center;
+}
+
+h1
+{
+	margin-left: 5%;
+}
+
+a
+{
+	color: #1fb33d;
+}
+
+form
+{
+	margin-left : 10%;
+	padding : 1%;
+	width : 800px;
+	background-color : #354351;
+	border-radius: 5%;
+}
+
+legend
+{
+	font-size: 2em;
+}
+
+label
+{
+	display: block;
+	width: 150px;
+	float : left;
+}
+
+#BoutonsFormulaires
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.boutonsFormulaires
+{
+	margin : 1%;
+	padding : 1%;
+	border-radius:50px;
+}
+
+input[type="reset"]
+{
+	background-color : grey;
+}
+
+input[type="submit"]
+{
+	background-color : blue;
+}
+
+#mesInformations
+{
+	margin-left: 10%;
+	width: 50%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+#informationsGenerales, #informationsPhysiques, #contactInformations
+{
+	border : solid black 1px;
+	padding : 1%;
+	background-color: #257eaa;
+}
+
+
+/**********************DYNAMICS THINGS**********************/
+#divDynamique
+{
+	border : 5px solid grey;
+	width: 300px;
+	height: 300px;
+}
+
+#canvasDynamique
+{
+	border : 5px solid grey;
+	width: 300px;
+	height: 300px;
+}
+
+#divCanvasImage
+{
+	margin: 1%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+li
+{
+	list-style-type: none;
+}

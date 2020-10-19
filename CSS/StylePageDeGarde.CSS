@@ -1,0 +1,71 @@
+/*Dimensions des blocs internes*/
+div div,td
+{
+	height: 150px;
+	width: 150px;
+}
+
+/*Dimentions des blocs externes.*/
+#tablebase, #divbase
+{
+	height: 300px;
+	width: 300px;
+	border-color: black;
+	border: solid;
+	border-collapse: collapse;
+}
+
+/*Flew wrap des divs pour qu'ils retournent à la ligne quand ils atteignent le bord.*/
+#divbase 
+{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+
+/*Style d'ID pour les couleurs des blocs*/
+
+#div1,#td1
+{
+	background-color: red;
+	border-color: red;
+}
+
+#div2,#td2
+{
+	background-color: blue;
+	border-color: blue;
+}
+
+#div3,#td3
+{
+	background-color: green;
+	border-color: green;
+}
+
+#div4,#td4
+{
+	background-color: yellow;
+	border-color: yellow;
+}
+
+/*On met le style du damier.*/
+
+#damierjs
+{
+	border-color: black;
+	border: solid;
+	border-collapse: collapse;
+}
+
+/*Les couleurs de fond blanches et noires*/
+
+#noir
+{
+	background-color: black;
+}
+
+#blanc
+{
+	background-color: white;
+}
