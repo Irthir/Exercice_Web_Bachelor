@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<HTML>
+
+	<HEAD> <!--Information de configuration : encodage, langue,...-->
+		<!--Méthode d'insertion du style dans le HEAD-->
+		<style type="text/css"></style>
+		<!--Appelle du style par un fichier externe.-->
+		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.css" charset="utf-8"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../Contenus/images/cirno9.jpg"/>
+		<meta charset="utf-8"/>
+		<lang="fr"/>
+		<script type="text/javascript">
+			function fun(a,b,...c)
+			//Prototype permettant de rentrer un paramètre a, un paramètre b et une suite d'éléments dans le paramètre c.
+			{
+
+			    console.log(`${a} ${b}`); // Résultat Algo Gestion Projets
+
+			    console.log(c);  // // Résultat array[Game Design, Cuisine, Natation]
+
+			    console.log(c[0]); // // Résultat "Game Design"
+
+			    console.log(c.length); // // Résultat 3
+
+			    console.log(c.indexOf('Game Design')); // // Résultat 0
+
+			}
+
+			fun('Algo','Gestion Projets','Game Design','Cuisine','Natation');
+
+			function fun2(...input)
+			//Prototype permettant de rentrer une suite d'éléments dans le paramètre input.
+			{
+
+			    let sum = 0;
+
+			    for(let i of input){
+
+			        sum+=i;
+
+			    }
+
+			    return sum;
+
+			}
+			console.log(fun2(1,2)); // // Résultat 1+2=3
+			console.log(fun2(1,2,3)); // // Résultat 1+2+3=6
+			console.log(fun2(1,2,3,4,5)); // // Résultat 1+2+3+4+5=15
+
+			//Fonction avec valeurs par défaut
+
+			//Fonctionnement Une variable stoque une fonction possédant des paramètres par défaut.
+		    var multiplier = function(num1 = 2, num2 = 5) 
+
+		        {
+
+		            return (num1 * num2);
+
+		        };
+		    console.log(multiplier());   // // Résultat 2*5=10
+		    console.log(multiplier(5));   // // Résultat 5*5=25
+		    console.log(multiplier(3,55)); // // Résultat 3*55=165
+			// Résultat ?? veut dire : essayer de déduire avant de lancer.
+		</script>
+
+		<TITLE>Les fonctions funs</TITLE>
+	</HEAD>
+
+	<BODY>
+		<header><!--Identité : Logo, bannière--></header>
+		<h2></h2>
+
+		<footer>
+			Contact : r.schlotter@ludus-académie.com<br/>
+			Téléphone : +33624202366
+		</footer>	
+	</BODY>
+</HTML>
+
+<!--La machine génère un nombre aléatoire entre 0 et 100 et un timer commence quand il clique sur jouer.
+Ou quand il saisit une valeur.
+A la fin on note le chrono et le nombre de tentatives.-->

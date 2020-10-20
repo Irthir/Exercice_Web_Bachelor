@@ -23,18 +23,51 @@
 	</HEAD>
 
 	<script language=javascript>
-		function redirect(chemin)
+		var Index =[
+			["./HTML/ExercicePremierJour.html","Exercice 1"],
+			["./HTML/DeuxiemeExercicePremierJour.html","Exercice 2"],
+			["./HTML/ExempleForEach.html","Exemple pour les ForEach"],
+			["./HTML/ExerciceRandomRequiemThePreSequel.html","Jeu du Juste Prix"]];
+
+		function afficheIndex()
 		{
-		  window.location = chemin;
+			var Contenu="";
+			Contenu+=("<select id='redirection' name='redirection' onchange='sendform(this)'>");
+			Object.keys(Index).forEach(key =>
+				{
+					Contenu+=("<option value="+Index[key][0]+">"+Index[key][1]+"</option>");
+				});
+			Contenu+=("</select>");
+			console.log(Contenu);
+			document.getElementById('Contenu').innerHTML = Contenu;
+		}
+
+		function redirect(X)
+		{
+		  window.location = X.value;
+		}
+
+		function sendform(X) 
+		{
+			var form = document.getElementById("monForm");
+			form.action = X.value;
+			form.submit();
 		}
 	</script>
 
-	<BODY>
+	<BODY onload="afficheIndex( );">
 		<header><!--Identité : Logo, bannière--></header>
-		<h3 onclick="redirect('./HTML/ExercicePremierJour.html');" onmouseenter="ChangeCouleur(this);" onmouseleave="RetourBlanc(this);">Exercice 1</h3>
+
+		<!--<h3 onclick="redirect('./HTML/ExercicePremierJour.html');" onmouseenter="ChangeCouleur(this);" onmouseleave="RetourBlanc(this);">Exercice 1</h3>
 		<h3 onclick="redirect('./HTML/DeuxiemeExercicePremierJour.html');" onmouseenter="ChangeCouleur(this);" onmouseleave="RetourBlanc(this);">Exercice 2</h3>
 		<h3 onclick="redirect('./HTML/ExempleForEach.html');" onmouseenter="ChangeCouleur(this);" onmouseleave="RetourBlanc(this);">Exemple pour les ForEach</h3>
 		<h3 onclick="redirect('./HTML/ExerciceRandomRequiemThePreSequel.html');" onmouseenter="ChangeCouleur(this);" onmouseleave="RetourBlanc(this);">Jeu du Juste Prix</h3>
+
+		<div id="Contenu"></div>-->
+
+		<form id="monForm">
+			
+		</form>
 		<footer>
 			Contact : r.schlotter@ludus-académie.com<br/>
 			Téléphone : +33624202366

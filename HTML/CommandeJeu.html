@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<HTML>
+
+	<HEAD> <!--Information de configuration : encodage, langue,...-->
+		<!--Méthode d'insertion du style dans le HEAD-->
+		<style type="text/css">
+			.flex
+			{
+				display: flex;
+				flex-direction: row;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.centre
+			{
+				margin-left: auto;
+				margin-right: auto;
+				text-align:center;
+			}
+			.image
+			{
+				width: 100px;
+				height: 100px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		</style>
+		<!--Appelle du style par un fichier externe.-->
+		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.css" charset="utf-8"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../Contenus/images/cirno9.jpg"/>
+		<meta charset="utf-8"/>
+		<script type="text/javascript">
+
+			var tabJeux = ["Mario,20#mario","Patate,999#patate","Tetris,5#tetris","Tabouret,14.99#tabouret","Scrable,24.99#scrabble"];
+
+			function afficheSelect(Tableau)
+			{
+				let monSelect=document.createElement("select");
+				monSelect.setAttribute("id","select");
+				monSelect.setAttribute("name","select");
+				monSelect.setAttribute("multiple","multiple");
+				monSelect.setAttribute("class","centre");
+				monSelect.setAttribute("onchange","afficheResult(this)");
+
+				Object.keys(Tableau).forEach(key =>
+					{
+						let monOption = document.createElement("option");
+						monOption.setAttribute("value",Tableau[key]);
+
+						var strTab = String(Tableau[key]);
+						var strNom = String(Tableau[key]).substr(0, String(Tableau[key]).indexOf(','));
+
+						var strPrix= strTab.substr(strTab.indexOf(',')+1, strTab.indexOf('#')-(strTab.indexOf(',')+1));
+						console.log(strPrix);
+						var maStr = strNom + " " + strPrix + "€";
+						monOption.innerHTML = maStr;
+						monSelect.appendChild(monOption);
+					});
+
+				let divSelect = document.createElement('div');
+				divSelect.setAttribute("id","divSelect");
+				divSelect.setAttribute("class","flex");
+				divSelect.appendChild(monSelect);
+				
+				let footer = document.getElementById('footer');
+				document.getElementById('body').insertBefore(divSelect,footer);
+			}
+
+			function getSelectResult(Select)
+			//Afficher le résultat sélectionner d'un select passé en argument.
+			{
+				let result =[];
+				for (var i=0; i<Select.length; i++)
+				{
+				    if (Select[i].selected)
+				    {
+				    	result.push(Select[i].value);
+				    }
+				}
+				return result;
+			}
+
+			function afficheResult(Select)
+			{
+				let chemin="../Contenus/images/";
+
+				let result = getSelectResult(Select);
+				console.log(result);
+
+				if (document.getElementById('Resultdiv')==undefined)
+				{
+					var Resultdiv = document.createElement("div");
+					Resultdiv.setAttribute("id","Resultdiv");
+				}
+				else
+				{
+					Resultdiv = document.getElementById('Resultdiv');
+					Resultdiv.innerHTML="";
+				}
+
+				var Prix=0;
+
+				for (var i = result.length - 1; i >= 0; i--)
+				{
+					var strTab = String(result[i]);
+
+					var divJeu = document.createElement("div");
+					divJeu.setAttribute("class","centre");
+					var divPrix = document.createElement("div");
+					divPrix.setAttribute("class","centre");
+
+					var img = document.createElement("img");
+					img.setAttribute("src",chemin+strTab.substr(strTab.indexOf('#')+1)+".jpg")
+					img.setAttribute("class","image");
+
+					divJeu.appendChild(img);
+
+					divPrix.innerHTML=strTab.substr(strTab.indexOf(',')+1, strTab.indexOf('#')-(strTab.indexOf(',')+1))+"€";
+					Prix+=parseFloat(strTab.substr(strTab.indexOf(',')+1, strTab.indexOf('#')-(strTab.indexOf(',')+1)));
+
+					var divLigne = document.createElement("div");
+					divLigne.setAttribute("class","flex");
+					divLigne.appendChild(divJeu);
+					divLigne.appendChild(divPrix);
+
+					Resultdiv.appendChild(divLigne);
+				}
+
+				Prix = Math.round(Prix*100)/100;
+
+				let monPrix = document.createElement("div");
+				monPrix.setAttribute("id","Prix");
+				monPrix.innerHTML = "Le prix du panier est de : "+Prix+"€";
+				monPrix.setAttribute("class","centre");
+
+				Resultdiv.appendChild(monPrix);
+
+				let footer = document.getElementById('footer');
+				document.getElementById('body').insertBefore(Resultdiv,footer);
+			}
+		</script>
+
+		<TITLE>Commande de Jeux</TITLE>
+	</HEAD>
+
+	<BODY onload="afficheSelect(tabJeux)" id="body">
+		<header><!--Identité : Logo, bannière--></header>
+		<h2 class="centre" id="titre">Cliquez sur les titres pour afficher les images</h2>
+
+
+		<footer id="footer">
+			Contact : r.schlotter@ludus-académie.com<br/>
+			Téléphone : +33624202366
+		</footer>	
+	</BODY>
+</HTML>

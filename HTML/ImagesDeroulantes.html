@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<HTML>
+
+	<HEAD> <!--Information de configuration : encodage, langue,...-->
+		<!--Méthode d'insertion du style dans le HEAD-->
+		<style type="text/css">
+			.flex
+			{
+				display: flex;
+				flex-direction: row;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.resultatdiv
+			{
+				margin-left: auto;
+				margin-right: auto;
+				text-align:center;
+			}
+			.image
+			{
+				width: 200px;
+				height: 200px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		</style>
+		<!--Appelle du style par un fichier externe.-->
+		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.css" charset="utf-8"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../Contenus/images/cirno9.jpg"/>
+		<meta charset="utf-8"/>
+		<lang="fr"/>
+		<script type="text/javascript">
+
+			function monAppendChild(element,...contenu)
+			{
+				Object.keys(contenu).forEach(key => 
+				{
+					element.appendChild(contenu[key]);
+				});
+			}
+
+			var tabImages = ["cirno9","Hanipaganda","KingoftheCrows","Where-Door"];
+
+			function afficheIndex(Index)
+			//Afficher un select contenant les valeurs d'un tableau passé en argument.
+			{
+				let chemin="../Contenus/images/";
+
+				let monSelect=document.createElement("select");
+				monSelect.setAttribute("id","redirection");
+				monSelect.setAttribute("name","redirection");
+				monSelect.setAttribute("multiple","multiple");
+				monSelect.setAttribute("onchange","afficheResult(this)");
+
+
+				/*let Contenu="";
+				Contenu+=("<select class=\"resultatdiv\" id='redirection' name='redirection' multiple onchange=\"afficheResult(this)\">");*/
+				Object.keys(Index).forEach(key =>
+					{
+						let monOption = document.createElement("option");
+						monOption.setAttribute("value",chemin+Index[key]+".jpg");
+						monOption.innerHTML = Index[key];
+						//Contenu+=("<option value="+chemin+Index[key]+".jpg>"+Index[key]+"</option>");
+						monAppendChild(monSelect,monOption);
+					});
+				//Contenu+=("</select>");
+
+				//document.getElementById('Contenu').innerHTML = Contenu;
+
+				let divSelect = document.getElementById('Contenu');
+				divSelect.innerHTML="";
+				monAppendChild(divSelect,monSelect);
+			}
+
+			function getSelectResult(Select)
+			//Afficher le résultat sélectionner d'un select passé en argument.
+			{
+				let result =[];
+				for (var i=0; i<Select.length; i++)
+				{
+				    if (Select[i].selected)
+				    {
+				    	result.push(Select[i].value);
+				    }
+				}
+				return result;
+			}
+
+			function afficheResult(Select)
+			{
+				let result = getSelectResult(Select);
+
+				var Resultdiv=document.getElementById('Result');
+				Resultdiv.innerHTML="";
+
+				for (var i = result.length - 1; i >= 0; i--)
+				{
+					var divContenu = document.createElement("div");
+					divContenu.setAttribute("class","resultatdiv");
+					var imageContenu =  document.createElement("img");
+					imageContenu.setAttribute("src",result[i]);
+					imageContenu.setAttribute("class","image");
+					divContenu.appendChild(imageContenu);
+					Resultdiv.appendChild(divContenu);
+				}
+			}
+		</script>
+
+		<TITLE>Images Déroulantes</TITLE>
+	</HEAD>
+
+	<BODY onload="afficheIndex(tabImages)">
+		<header><!--Identité : Logo, bannière--></header>
+		<h2 class="resultatdiv">Cliquez sur les titres pour afficher les images</h2>
+		<div id="Contenu" class="resultatdiv"></div>
+		<div id="Result" class="flex"></div>
+		
+		<footer>
+			Contact : r.schlotter@ludus-académie.com<br/>
+			Téléphone : +33624202366
+		</footer>	
+	</BODY>
+</HTML>
