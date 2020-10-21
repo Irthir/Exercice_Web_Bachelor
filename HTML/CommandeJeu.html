@@ -126,7 +126,8 @@
 					Resultdiv.appendChild(divLigne);
 				}
 
-				Prix = Math.round(Prix*100)/100;
+				//Prix = Math.round(Prix*100)/100; // .toFixed(2) peut faire la même chose.
+				Prix = Prix.toFixed(2);
 
 				let monPrix = document.createElement("div");
 				monPrix.setAttribute("id","Prix");

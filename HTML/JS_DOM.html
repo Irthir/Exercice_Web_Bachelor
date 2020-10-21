@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<HTML>
+
+	<HEAD> <!--Information de configuration : encodage, langue,...-->
+		<!--Méthode d'insertion du style dans le HEAD-->
+		<style type="text/css">
+			#cadre
+			{
+				background-color: green;
+			}
+			#par1
+			{
+				font-style: italic;
+			}
+			.test
+			{
+				color: blue;
+			}
+
+
+			.centre
+			{
+				margin-left: auto;
+				margin-right: auto;
+				text-align:center;
+			}
+			button
+			{
+				display: block;
+			}
+		</style>
+		<!--Appelle du style par un fichier externe.-->
+		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.css" charset="utf-8"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../Contenus/images/cirno9.jpg"/>
+		<meta charset="utf-8"/>
+		<lang="fr"/>
+		<script type="text/javascript">
+
+			function Epaissir()
+			{	
+				cadre.style.borderWidth = parseInt(cadre.style.borderWidth) + 1 + "px";
+				console.log(cadre.style.border.borderwidth);
+			}
+
+			function init()
+			{
+				document.getElementById('Title').innerHTML = "JavaScript DOM";
+				document.getElementById('btn2').onclick = function()
+				{
+					Epaissir();
+				};
+				document.getElementById('btn3').addEventListener("click", Epaissir, false);
+
+				//On y accède avec la propriété innerHTML
+				var myTitle = document.getElementById("Title").innerHTML;
+				console.log(myTitle);
+				//On y accède avec la propriété nodeValue du 1er enfant du noeud
+				var myTitle = document.getElementById("Title").firstChild.nodeValue;
+				console.log(myTitle);
+				//Equivalent de:
+				var myTitle = document.getElementById("Title").childNodes[0].nodeValue;
+				console.log(myTitle);
+
+				//Pour ajouter un élément au DOM, il faut d'abord le créer, puis l'ajouter à son parent. -->
+				//Ne pas oublier que le texte est un textNode.
+
+				//Supprimer avec remove() ou removeCHILD5°;
+
+				//Très pratique :
+				/*var child = document.getElementById("p1");
+				child.parentNode.removeCHild(child);*/
+
+				//Remplacer un élément par un autre avec :
+				/*parent.replaceChild(para, child);*/
+
+				//voir le damier en DOM
+
+
+				//Les animations en DOM
+				document.getElementById('boutonanim').addEventListener("click", MyMove, false);
+			}
+
+			var Interval=null;
+
+			function MyMove()
+			//Déplacer en diagonal l'objet animé.
+			{
+				var divanime = document.getElementById('anime');
+				var divconteneur = document.getElementById('conteneur');
+
+				if (Interval==null)
+				{
+					Interval=setInterval(DiagonalHautGauche,10);//Appel de la fonction XXX toutes les 0.01 secondes.
+				}
+			}
+
+			function DiagonalHautGauche ()
+			{
+				var divanime = document.getElementById('anime');
+				var divconteneur = document.getElementById('conteneur');
+				var top = divanime.style.top.substring(0,divanime.style.top.indexOf('p'));
+				var left = divanime.style.left.substring(0,divanime.style.left.indexOf('p'));
+				
+				if (top>=350|| left>=350)
+				{
+					console.log("ChangeInterval");
+					clearInterval(Interval);
+					var nX=Math.floor(Math.random()*2);
+					switch (nx)
+					{
+						case 0:
+							Interval=setInterval(HorizontalBasDroite,10);
+						break;
+						case 1:
+							Interval =setInterval(HorizontalBasDroite,10);
+						break;
+						/*case 2:
+
+						break;*/
+					}
+					//Interval=null;
+				}
+				else
+				{
+					top++;
+					left++;
+					divanime.style.top = top+"px";
+					divanime.style.left = left+"px";
+					console.log(top+" "+left);
+				}
+			}
+
+			function HorizontalBasDroite ()
+			{
+				var divanime = document.getElementById('anime');
+				var divconteneur = document.getElementById('conteneur');
+				//var top = divanime.style.top.substring(0,divanime.style.top.indexOf('p'));
+				var left = divanime.style.left.substring(0,divanime.style.left.indexOf('p'));
+				
+				if (left<=0)
+				{
+					console.log("ChangeInterval");
+					clearInterval(Interval);
+					var nX=Math.floor(Math.random()*1);
+					switch (nx)
+					{
+						case 0:
+							Interval=setInterval(DiagonalBasGauche,10);
+						break;
+						/*case 1:
+							Interval =setInterval(HorizontalBasDroite,10);
+						break;*/
+						/*case 2:
+
+						break;*/
+					}
+				}
+				else
+				{
+					console.log(left);
+					left = parseInt(left)-1;
+					//divanime.style.top = top+"px";
+					divanime.style.left = left+"px";
+					//console.log(top+" "+left);
+				}
+			}
+
+			function DiagonalBasGauche ()
+			{
+				var divanime = document.getElementById('anime');
+				var divconteneur = document.getElementById('conteneur');
+				var top = divanime.style.top.substring(0,divanime.style.top.indexOf('p'));
+				var left = divanime.style.left.substring(0,divanime.style.left.indexOf('p'));
+				
+				if (top<=0 || left>=350)
+				{
+					console.log("ChangeInterval");
+					clearInterval(Interval);
+					var nX=Math.floor(Math.random()*2);
+					switch (nx)
+					{
+						case 0:
+							Interval=setInterval(HorizontalHautDroite,10);
+						break;
+						case 1:
+							Interval =setInterval(VerticalHautDroite,10);
+						break;
+						/*case 2:
+
+						break;*/
+					}
+				}
+				else
+				{
+					top--;
+					left++;
+					divanime.style.top = top+"px";
+					divanime.style.left = left+"px";
+					console.log(top+" "+left);
+				}
+			}
+
+			function HorizontalHautDroite ()
+			{
+				var divanime = document.getElementById('anime');
+				var divconteneur = document.getElementById('conteneur');
+				//var top = divanime.style.top.substring(0,divanime.style.top.indexOf('p'));
+				var left = divanime.style.left.substring(0,divanime.style.left.indexOf('p'));
+				
+				if (left<=0)
+				{
+					console.log("ChangeInterval");
+					clearInterval(Interval);
+					var nX=Math.floor(Math.random()*2);
+					switch (nx)
+					{
+						case 0:
+							Interval=setInterval(VerticalHautGauche,10);
+						break;
+						case 1:
+							Interval =setInterval(DiagonalHautGauche,10);
+						break;
+						/*case 2:
+
+						break;*/
+					}
+				}
+				else
+				{
+					console.log(left);
+					left = parseInt(left)-1;
+					//divanime.style.top = top+"px";
+					divanime.style.left = left+"px";
+					//console.log(top+" "+left);
+				}
+			}
+
+			function VerticalHautDroite ()
+			{
+				var divanime = document.getElementById('anime');
+				var divconteneur = document.getElementById('conteneur');
+				var top = divanime.style.top.substring(0,divanime.style.top.indexOf('p'));
+				//var left = divanime.style.left.substring(0,divanime.style.left.indexOf('p'));
+				
+				if (top>=350)
+				{
+					console.log("ChangeInterval");
+					clearInterval(Interval);
+					switch (nx)
+					{
+						case 0:
+							Interval=setInterval(HorizontalBasDroite,10);
+						break;
+						/*case 1:
+							Interval =setInterval(DiagonalHautGauche,10);
+						break;*/
+						/*case 2:
+
+						break;*/
+					}
+				}
+				else
+				{
+					//console.log(left);
+					//left = parseInt(left)-1;
+					divanime.style.top = top+"px";
+					//divanime.style.left = left+"px";
+					console.log(top+" "+left);
+				}
+			}
+
+			function VerticalHautGauche ()
+			{
+				var divanime = document.getElementById('anime');
+				var divconteneur = document.getElementById('conteneur');
+				var top = divanime.style.top.substring(0,divanime.style.top.indexOf('p'));
+				//var left = divanime.style.left.substring(0,divanime.style.left.indexOf('p'));
+				
+				if (top>=350)
+				{
+					console.log("ChangeInterval");
+					clearInterval(Interval);
+					//Interval=null;
+					//Interval=setInterval(DiagonalHautGauche,10);
+				}
+				else
+				{
+					//console.log(left);
+					//left = parseInt(left)-1;
+					divanime.style.top = top+"px";
+					//divanime.style.left = left+"px";
+					console.log(top+" "+left);
+				}
+			}
+
+			function DiagonalHautDroite ()
+			{
+				var divanime = document.getElementById('anime');
+				var divconteneur = document.getElementById('conteneur');
+				var top = divanime.style.top.substring(0,divanime.style.top.indexOf('p'));
+				var left = divanime.style.left.substring(0,divanime.style.left.indexOf('p'));
+				
+				if (top>=350|| left<=0)
+				{
+					console.log("ChangeInterval");
+					clearInterval(Interval);
+					//Interval=null;
+					//Interval=setInterval(HorizontalBasDroite,10);
+				}
+				else
+				{
+					top++;
+					left--;
+					divanime.style.top = top+"px";
+					divanime.style.left = left+"px";
+					console.log(top+" "+left);
+				}
+			}
+
+			function DiagonalBasDroite ()
+			{
+				var divanime = document.getElementById('anime');
+				var divconteneur = document.getElementById('conteneur');
+				var top = divanime.style.top.substring(0,divanime.style.top.indexOf('p'));
+				var left = divanime.style.left.substring(0,divanime.style.left.indexOf('p'));
+				
+				if (top<=0|| left<=0)
+				{
+					console.log("ChangeInterval");
+					clearInterval(Interval);
+					//Interval=null;
+					//Interval=setInterval(HorizontalBasDroite,10);
+				}
+				else
+				{
+					top--;
+					left--;
+					divanime.style.top = top+"px";
+					divanime.style.left = left+"px";
+					console.log(top+" "+left);
+				}
+			}
+		</script>
+
+		<TITLE id="Title"></TITLE>
+	</HEAD>
+
+	<BODY onload="init()">
+		<header><!--Identité : Logo, bannière--></header>
+		<h2>DOM Document Object Model</h2>
+		<div id="cadre" style="width: 110px; height: 110px; border:solid;border-width: 10px;">
+			<p id="par1" class="test">
+				Paragraphe contenu dans le cadre.
+			</p>
+		</div>
+
+		<button id="btn1" onclick="Epaissir()">Soupe</button>
+		<button id="btn2">Choux</button>
+		<button id="btn3">Prout</button>
+
+
+		<script type="text/javascript">
+			var contour = document.getElementById('cadre');
+			//console.log(contour);
+			//console.log(typeof(contour));
+			//getElement... renvoie un objet.
+			var par = document.querySelectorAll("#cadre> p");
+			console.log(par); //On a récupéré le paragraphe, toutes ses propriétés et on sait que c'est une node list.
+			par = contour.getElementsByTagName('p');
+			console.log(par);
+			console.log(Array.isArray(par));
+			console.table(par);
+			console.log(par.length);
+			console.log(par[par.length-1]);
+
+			var X = document.querySelectorAll("p.test");
+			console.log(X);
+
+			X = document.querySelectorAll("p#par1"); //On a récupéré un noeud à partir du style d'identifiant.
+			console.log(X);
+			console.log(X[0].innerHTML);
+		</script>
+		
+		<p>
+			Body et Head sont des "siblings" et enfants de html.
+			Tableau du DOM.
+			Title est un noeud.
+			Et My_Title est un noeud texte.
+			Tous les éléments d'une page sont des noeuds.
+			Il y a nodeValue et nodeType;
+
+			On supprime un objet avec remove() ou removechild();
+
+			De la même façon qu'on a fait les listes de valeurs qui affichent les images, le refaire en DOM.
+		</p>
+
+
+
+		<h3>Les animations en DOM</h3>
+
+		<div id="conteneur" style="height: 400px; width: 400px; background-color: yellow;">
+			<div id="anime" style="height: 50px; width: 50px; background-color: green; top: 0px; left: 0px; position: relative;">
+
+			</div>
+		</div>
+
+		<button id="boutonanim">Lancer Animation</button>
+
+		<footer>
+			Contact : r.schlotter@ludus-académie.com<br/>
+			Téléphone : +33624202366
+		</footer>	
+	</BODY>
+</HTML>
