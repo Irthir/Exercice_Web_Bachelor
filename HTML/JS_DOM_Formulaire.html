@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<HTML>
+
+	<HEAD> <!--Information de configuration : encodage, langue,...-->
+		<!--Méthode d'insertion du style dans le HEAD-->
+		<style type="text/css">
+			.centre
+			{
+				margin-left: auto;
+				margin-right: auto;
+				text-align:center;
+			}
+		</style>
+		<!--Appelle du style par un fichier externe.-->
+		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.css" charset="utf-8"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../Contenus/images/cirno9.jpg"/>
+		<meta charset="utf-8"/>
+		<lang="fr" id="Body"/>	
+		<script type="text/javascript">
+			var RegionCivilite = [{name:"Nom",type:"text"},{name:"Prenom",type:"text"},{name:"Date de Naissance",type:"date"},{name:"genre",type:"radio",value:["Homme","Femme","Autre"]}];
+			var RegionTravail = [
+			{name:"Language de Programmation",type:"checkbox",value:["C","C++","C#","JavaScript","Java","Pascal","PHP"]},
+			{name:"Niveau de Langue",type:"range",min:"0",max:"5",pas:"1"},
+			{name :"double email",type:"double-email",contenu:[
+				{name:"email1",type:"mail"},
+				{name:"email2",type:"mail"},
+				{name:"radioemail",type:"radio"}]},
+			{name:"Telephone",type:"tel",pattern:"[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"},
+			{name:"Diplome",type:"select",value:["brevet","bac","bts","licence","bachelor","mastère"]}];
+			var RegionBouton = [{name:"submit",type:"submit"},{name:"reset",type:"reset"}]
+
+
+			function init()
+			{
+				//console.log(RegionCivilite);
+				//console.log(RegionTravail);
+				//console.log(RegionBouton);
+
+				var formulaireDOM = document.createElement("form");
+				formulaireDOM.setAttribute("name","formulaireDOM");
+				formulaireDOM.setAttribute("id","Form");
+				formulaireDOM.setAttribute("class","centre");
+				console.log(formulaireDOM);
+
+				for (i=0; i<3;i++)
+				{
+					var fieldset = document.createElement("fieldset");
+					fieldset.setAttribute("name","fieldset"+(i+1));
+					fieldset.setAttribute("id","fieldset"+(i+1));
+					fieldset.setAttribute("class","centre");
+
+					var legende = document.createElement("legend");
+					legende.setAttribute("name","legende"+(i+1));
+					legende.setAttribute("id","legende"+(i+1));
+					
+					var texteLegende;
+					var Region;
+					switch(i)
+					{
+						case 0:
+							texteLegende = document.createTextNode("Civilité");
+							Region = RegionCivilite;
+						break;
+						case 1:
+							texteLegende = document.createTextNode("Travail");
+							Region = RegionTravail;
+						break;
+						case 2:
+							texteLegende = document.createTextNode("Boutons");
+							Region = RegionBouton;
+						break;
+						default:
+							texteLegende = document.createTextNode("Default");	
+							Region=null;
+						break;
+					}
+					legende.appendChild(texteLegende);
+					fieldset.appendChild(legende);
+
+					if (Region!=null)
+					{
+						Object.keys(Region).forEach(key =>
+						{
+							console.log(key, Region[key]); //Ici on remplit le fieldset
+							CreateElementFormulaire(formulaireDOM,Region[key]);
+						});
+
+						formulaireDOM.appendChild(fieldset);
+					}
+				}
+
+				var Body = document.getElementById('Body');
+				var footer = document.getElementById('footer');
+				Body.insertBefore(formulaireDOM,footer);
+			}
+
+			function CreateElementFormulaire(Formulaire, Entree)
+			{
+				console.log(Formulaire);
+				console.log(Entree);
+			}
+			/*
+				Date du jour (pas dans le form)
+
+				-genre
+				-Nom Prénom
+				-Date de naissance
+				-checkbox générées dynamiquement par un tableau. Différents langages de prog
+				-curseur pour le niveau de -langue
+				-email1
+				-email2
+				-Bouton radio pour dire que email2 == email1
+				Si on clique dessus.
+				-Il existe un champ téléphone
+				-Bouton reset
+				-bouton submit
+				-Listbox liste de diplomes (alimenté par tableau)
+
+				-Tous les champs ont un label
+				Et éventuellement un placeholder
+
+				-Sur la partie civilité genre, nom, prénom, DDN sera entourée d'un fieldset.
+
+				-Partie hobbies avec une liste de jeux et on affiche les images des jeux.(modifié)
+				[12:24]
+				Le bouton submit appelle une fonction de validation et si tout se passe bien on arrive sur une page traitement formulaire.
+				[12:25]
+				Faire un sommaire dans la page traitement formulaire
+				[12:25]
+				page qu'on appelle JS_Traitement_Formulaire
+			*/
+		</script>
+
+		<TITLE id="DOM_">DOM</TITLE>
+	</HEAD>
+
+	<BODY onload="init()">
+		<header><!--Identité : Logo, bannière--></header>
+		<h2 class="centre">Patate</h2>
+
+		<form id="form" name="form" action="JS_traitement_formulaire.html" method="get" class="centre">	
+		<!--La méthode get renvoie les informations dans l'url de la page ouverte, l'action possède l'adresse de la page à ouvrir.-->
+
+			<input type=hidden name="hidden" id="hidden" value="Bonjour"/>
+			<!--Un input caché contenant la valeur "Bonjour" pour pouvoir commencer à 1 lors de la récupération des informations..-->
+
+			<fieldset>
+				<legend>Informations Générales</legend>
+				<!--Légende relative à ces éléments du formulaire.-->
+				<label for="nom">Nom :</label> <input class="centre" type="text" name="nom" id="nom" maxlength="20" size="20"/><br/>
+				<!--Réception du Nom dans un input de type text et d'id nom.-->
+				<!--Le label permet d'associer le libellé au champ en renseignant son id.-->
+				<label for="prenom">Prénom :</label> <input class="centre" type="text" name="prenom" id="prenom" maxlength="20" size="20"/><br/> 
+				<!--Réception du Prénom dans un input de type text et d'id prenom.-->
+				<label for="ddn">Date de naissance :</label> <input class="centre" type="date" name="ddn" id="ddn"/><br/>
+				<!--Réception de la date de naissance dans un input de type date et d'id ddn.-->
+				<label for="ddn">Genre :</label>
+				<input class="centre" type="radio" name="genre" id ="genre" value ="Homme" checked="checked"/>Homme
+				<input class="centre" type="radio" name="genre" id ="genre" value="Femme" />Femme
+				<input class="centre" type="radio" name="genre" id ="genre" value ="Autre"/>Autre<br/>
+				<!--Réception du genre dans un input de type radio et d'id genre.-->
+			</fieldset>
+			<!--Le fieldset permet de regrouper divers éléments du formulaire et d'y associer une légende.-->
+
+			<fieldset>
+				<legend>Informations physiques</legend>
+				<label for="taille">Taille (cm) :</label><input class="centre" type="number" name="taille" id="taille" min="1" max="250" /><br/>
+				<!--Réception de la taille dans un input de type number et d'id taille.-->
+				<label for="poids">Poids (kg) :</label><input class="centre" type="number" name="poids" id="poids" min="1" max="600" /> <br />
+				<!--Réception du poids dans un input de type number et d'id poids.-->
+				<label for="frequenceSportif">Fréquence Sportive</label>
+					<select class="centre" name="frequenceSportif" id="frequenceSportif" size="1">
+						<option>Plus d'une fois par semaine
+						<option>Une fois par semaine
+						<option>Une fois par mois
+						<option>Une fois par trimestre
+						<option>Moins d'une fois par trimestre
+					</select>
+				<!--Réception de la fréquence sportive dans un input de type select et d'id frequenceSportif.-->
+			</fieldset>
+
+			<fieldset>
+				<legend>Informations de contact</legend>
+				<label for="mail">Email :</label> <input class="centre" type="mail" name="mail" id="mail" maxlength="40" size="20" placeholder="e-mail" /><br/>
+				<!--Réception de l'e-mail dans un input de type mail et d'id mail.-->
+				<!--Le placeholder permet d'afficher un texte dans le fond de l'espace prévu à la saisie utilisateur.-->
+				<label for="telephone">Téléphone :</label> <input class="centre" type="number" name="telephone" id="telephone" maxlength="20" /> <br />
+				<!--Réception du téléphone dans un input de type number et d'id telephone.-->
+				
+				<div ID="BoutonsFormulaires">
+					<input class="centre" class="boutonsFormulaires" type="reset" name="reset" id="reset" value="Reset"/>
+					<!--Réception de l'information d'annulation du contenu du formulaire dans un input de type reset et d'id reset.-->
+					<input class="centre" class="boutonsFormulaires" type="submit" name="submit" id="submit" value="Valider"/><!-- onClick=""/>-->
+					<!--Réception de l'information de soumission du contenu du formulaire dans un input de type submit et d'id submit.-->
+				</div>
+				<!--Boutons pour annuler ou soumettre la saisie.-->
+			</fieldset>
+		</form>
+		
+		<footer id="footer">
+			Contact : r.schlotter@ludus-académie.com<br/>
+			Téléphone : +33624202366
+		</footer>	
+	</BODY>
+</HTML>

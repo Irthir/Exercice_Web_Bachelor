@@ -12,6 +12,14 @@
 				margin-right: auto;
 				text-align:center;
 			}
+			.classtoto
+			{
+				background-color: fuchsia;
+			}
+			.classtutu
+			{
+				border: solid;
+			}
 		</style>
 		<!--Appelle du style par un fichier externe.-->
 		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.css" charset="utf-8"/>
@@ -69,7 +77,7 @@
 
 
 
-			function Creation()
+			function init()
 			{
 				var monParagraphe = document.createElement("p");
 				var monTexte = document.createTextNode("Un ancien texte pour un nouveau paragraphe.");
@@ -96,6 +104,13 @@
 				var Body = document.getElementsByTagName('Body')[0];
 				console.log(Body);
 				Body.insertBefore(divCentre,document.getElementsByTagName("footer")[0]);
+
+				var p1 = document.getElementById('p1');
+				p1.setAttribute("name","paragraphe1");
+
+				var p2 = document.getElementById('p2');
+				p2.setAttribute("class","classtoto");
+				p2.classList.add("classtutu");
 			}
 
 			function Remplacer()
@@ -105,12 +120,16 @@
 				monParagraphe2.appendChild(monTexte);
 				var Div = document.getElementById('div1');
 				Div.replaceChild(monParagraphe2,Div.firstChild);
+				//p2.removeAttribute("class");
+				//p2.setAttribute("class","classtutu");
+				p2.classList.remove("classtutu");
+
 			}
 
 		</script>
 	</HEAD>
 
-	<BODY>
+	<BODY onload="init()">
 		<header><!--Identité : Logo, bannière--></header>
 		<h2 class="centre">Dom Navigation</h2>
 
@@ -127,9 +146,6 @@
 				Second paragraphe.
 			</p>
 		</div>
-		<script type="text/javascript">
-			Creation();
-		</script>
 
 		<!--Nous avons posé des éléments dans le dom.-->
 		<footer>

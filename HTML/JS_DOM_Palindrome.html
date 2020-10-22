@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<HTML>
+
+	<HEAD> <!--Information de configuration : encodage, langue,...-->
+		<!--Méthode d'insertion du style dans le HEAD-->
+		<style type="text/css">
+			.centre
+			{
+				margin-left: auto;
+				margin-right: auto;
+				text-align:center;
+			}
+			.vert
+			{
+				background-color: green;
+			}
+			.rouge
+			{
+				background-color: red;
+			}
+		</style>
+		<!--Appelle du style par un fichier externe.-->
+		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.css" charset="utf-8"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../Contenus/images/cirno9.jpg"/>
+		<meta charset="utf-8"/>
+		<lang="fr" id="Body"/>	
+		<script type="text/javascript">
+			function init()
+			{
+				var inputPalindrome = document.createElement("input");
+				inputPalindrome.setAttribute("type","text");
+				inputPalindrome.setAttribute("minlength",4);
+				inputPalindrome.setAttribute("maxlength",30);
+				inputPalindrome.setAttribute("placeholder","Saisir un mot");
+				inputPalindrome.setAttribute("onblur","alertPalindrome(event)");
+
+				var div = document.createElement("div");
+				div.setAttribute("class","centre");
+				div.appendChild(inputPalindrome);
+
+				var body = document.getElementById('Body');
+				body.insertBefore(div,document.getElementById('footer'));
+
+				var monDiv = document.createElement("div");
+				monDiv.setAttribute("class","centre");
+				monDiv.setAttribute("id","monDiv");
+				body.insertBefore(monDiv,document.getElementById('footer'));
+			}
+
+			function alertPalindrome(X)
+			{
+				console.log(this);
+				var monElement = X.srcElement;
+				var maChaine = X.srcElement.value;
+				console.log(maChaine);
+			
+				var bPalindrome=true;
+				for (var i = 0; i < (maChaine.length/2); i++)
+				{
+					if (maChaine[i].toUpperCase()!= maChaine[maChaine.length-i-1].toUpperCase())
+					{
+						bPalindrome=false;
+						//break;
+					}
+				}
+
+				var monDiv = document.getElementById('monDiv');
+				var monP = document.createElement("p");
+				monP.style.width = "50%";
+				var monText;
+
+				if (bPalindrome)
+				{
+					//alert("Le mot "+maChaine+" est un palindrome.");
+					monText = document.createTextNode("Le mot "+maChaine+" est un palindrome.");
+					monElement.setAttribute("class","vert");
+					monP.setAttribute("class","centre vert");
+				}
+				else
+				{
+					//alert("Le mot "+maChaine+" n'est pas un palindrome.");
+					monText = document.createTextNode("Le mot "+maChaine+" n'est pas un palindrome.");
+					monElement.setAttribute("class","rouge");
+					monP.setAttribute("class","centre rouge");
+				}
+				monP.appendChild(monText);
+				monDiv.appendChild(monP);
+			}
+		</script>
+
+		<TITLE id="DOM_Palindrome">DOM Palindrome</TITLE>
+	</HEAD>
+
+	<BODY onload="init();">
+		<header><!--Identité : Logo, bannière--></header>
+		<h2 class="centre">Input et bouton palindrome</h2>
+		<h4 class="centre">Saisissez un mot pour savoir si c'est un palindrome ou non.</h4>
+		
+		<p class="centre">
+			Les évènements inputs et onchange ne sont pas déclanchés sur un changement js.
+		</p>
+		<footer id="footer">
+			Contact : r.schlotter@ludus-académie.com<br/>
+			Téléphone : +33624202366
+		</footer>	
+	</BODY>
+</HTML>
