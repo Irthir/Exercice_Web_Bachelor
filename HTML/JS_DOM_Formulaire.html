@@ -10,6 +10,25 @@
 				margin-right: auto;
 				text-align:center;
 			}
+			#legende3
+			{
+				display: flex;
+				flex-direction: row;
+			}
+			.image
+			{
+				width: 180px;
+				height: 180px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.flex
+			{
+				display: flex;
+				flex-direction: row;
+				margin-left: auto;
+				margin-right: auto;
+			}
 		</style>
 		<!--Appelle du style par un fichier externe.-->
 		<link rel="stylesheet" type="text/css" href="../CSS/Formulaire.css" charset="utf-8"/>
@@ -17,17 +36,17 @@
 		<meta charset="utf-8"/>
 		<lang="fr" id="Body"/>	
 		<script type="text/javascript">
-			var RegionCivilite = [{name:"Nom",type:"text"},{name:"Prenom",type:"text"},{name:"Date de Naissance",type:"date"},{name:"genre",type:"radio",value:["Homme","Femme","Autre"]}];
+			var RegionCivilite = [{name:"Nom",type:"text"},{name:"Prenom",type:"text"},{name:"Date de Naissance",type:"date"},{name:"Genre",type:"radio",value:["Homme","Femme","Autre"]},{name:"Jeux",type:"select",value:["cirno9","Hanipaganda","KingoftheCrows","Where-Door"],id:"Jeux",multiple:"multiple",onchange:"afficheResult(this)"}];
 			var RegionTravail = [
-			{name:"Language de Programmation",type:"checkbox",value:["C","C++","C#","JavaScript","Java","Pascal","PHP"]},
+			{name:"Languages de Programmation",type:"checkbox",value:["C","C++","C#","JavaScript","Java","Pascal","PHP"]},
 			{name:"Niveau de Langue",type:"range",min:"0",max:"5",pas:"1"},
 			{name :"double email",type:"double-email",contenu:[
-				{name:"email1",type:"mail"},
-				{name:"email2",type:"mail"},
+				{name:"Email1",type:"mail"},
+				{name:"Email2",type:"mail"},
 				{name:"radioemail",type:"radio"}]},
 			{name:"Telephone",type:"tel",pattern:"[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"},
 			{name:"Diplome",type:"select",value:["brevet","bac","bts","licence","bachelor","mastère"]}];
-			var RegionBouton = [{name:"submit",type:"submit"},{name:"reset",type:"reset"}]
+			var RegionBouton = [{name:"submit",type:"submit"},{name:"reset",type:"reset"}];
 
 
 			function init()
@@ -40,7 +59,9 @@
 				formulaireDOM.setAttribute("name","formulaireDOM");
 				formulaireDOM.setAttribute("id","Form");
 				formulaireDOM.setAttribute("class","centre");
-				console.log(formulaireDOM);
+				formulaireDOM.setAttribute("action","./JS_DOM_Resultat.html");
+				formulaireDOM.setAttribute("method","GET");
+				//console.log(formulaireDOM);
 
 				for (i=0; i<3;i++)
 				{
@@ -75,14 +96,14 @@
 						break;
 					}
 					legende.appendChild(texteLegende);
-					fieldset.appendChild(legende);
+					fieldset.appendChild(legende); 
 
 					if (Region!=null)
 					{
 						Object.keys(Region).forEach(key =>
 						{
-							console.log(key, Region[key]); //Ici on remplit le fieldset
-							CreateElementFormulaire(formulaireDOM,Region[key]);
+							//console.log(key, Region[key]); //Ici on remplit le fieldset
+							CreateElementFormulaire(fieldset,Region[key]);
 						});
 
 						formulaireDOM.appendChild(fieldset);
@@ -94,11 +115,371 @@
 				Body.insertBefore(formulaireDOM,footer);
 			}
 
-			function CreateElementFormulaire(Formulaire, Entree)
+			function CreateElementFormulaire(Fieldset, Entree)
+			//BUT : Créer un élément de formulaire à partir de son entrée.
+			//ENTREE : Une entrée pour le formulaire et le dit-formulaire.
+			//SORTIE : Le formulaire avec une entrée supplémentaire.
 			{
-				console.log(Formulaire);
-				console.log(Entree);
+				var div = document.createElement("div");
+				//div.setAttribute("class","centre");
+				switch(Entree.type)
+				{
+					case "text" :
+						var element = document.createElement("input");
+						element.setAttribute("type",Entree.type);
+						element.setAttribute("name",Entree.name);
+						
+						var label = document.createElement("label");
+						label.setAttribute("for",Entree.name);
+
+						var texte = document.createTextNode(Entree.name+" :");
+						label.appendChild(texte);
+
+						div.appendChild(label);
+						div.appendChild(element);
+					break;
+					case "date" :
+						var element = document.createElement("input");
+						element.setAttribute("type",Entree.type);
+						element.setAttribute("name",Entree.name);
+						
+						var label = document.createElement("label");
+						label.setAttribute("for",Entree.name);
+
+						var texte = document.createTextNode(Entree.name+" :");
+						label.appendChild(texte);
+
+						div.appendChild(label);
+						div.appendChild(element);
+					break;
+					case "checkbox" :
+						var name = document.createElement("p");
+						var nameText = document.createTextNode(Entree.name+" :");
+						name.appendChild(nameText);
+						div.appendChild(name);
+						Object.keys(Entree.value).forEach(key =>
+						{
+							var monDiv = document.createElement("div");
+
+							var element = document.createElement("input");
+							element.setAttribute("type",Entree.type);
+							element.setAttribute("name",Entree.name);
+							element.setAttribute("value",Entree.value[key]);
+
+							var label = document.createElement("label");
+							label.setAttribute("for",Entree.value[key]);
+
+							var texte = document.createTextNode(Entree.value[key]+" :");
+							label.appendChild(texte);
+
+							monDiv.appendChild(label);
+							monDiv.appendChild(element);
+							div.appendChild(monDiv);
+						});
+					break;
+					case "radio" :
+						var name = document.createElement("p");
+						var nameText = document.createTextNode(Entree.name+" :");
+						name.appendChild(nameText);
+						div.appendChild(name);
+						Object.keys(Entree.value).forEach(key =>
+						{
+							var monDiv = document.createElement("div");
+
+							var element = document.createElement("input");
+							element.setAttribute("type",Entree.type);
+							element.setAttribute("name",Entree.name);
+
+							var label = document.createElement("label");
+							label.setAttribute("for",Entree.value[key]);
+
+							var texte = document.createTextNode(Entree.value[key]+" :");
+							label.appendChild(texte);
+
+							monDiv.appendChild(label);
+							monDiv.appendChild(element);
+							div.appendChild(monDiv);
+						});
+					break;
+					case "range" :
+						var element = document.createElement("input");
+						element.setAttribute("type",Entree.type);
+						element.setAttribute("name",Entree.name);
+						element.setAttribute("min",Entree.min);
+						element.setAttribute("max",Entree.max);
+						element.setAttribute("step",Entree.pas);
+
+						var label = document.createElement("label");
+						label.setAttribute("for",Entree.name);
+
+						var texte = document.createTextNode(Entree.name+" :");
+						label.appendChild(texte);
+
+						div.appendChild(label);
+						div.appendChild(element);
+					break;
+					case "select" :
+						var element = document.createElement("select");
+						//element.setAttribute("type",Entree.type);
+						element.setAttribute("name",Entree.name);
+						var sChemin = "";
+						var jpg = "";
+						if (Entree.name=="Jeux")
+						{
+							sChemin = "../Contenus/images/";
+							jpg = ".jpg";
+						}
+
+						if(Entree.id!=null)
+							element.setAttribute("id",Entree.id);
+						if(Entree.multiple!=null)
+							element.setAttribute("multiple",Entree.multiple);
+						if(Entree.onchange!=null)
+							element.setAttribute("onchange",Entree.onchange);
+						
+						Object.keys(Entree.value).forEach(key =>
+						{
+							var option = document.createElement("option");
+							option.setAttribute("value",sChemin+Entree.value[key]+jpg);
+							var optionText = document.createTextNode(Entree.value[key]);
+							option.appendChild(optionText);
+
+							element.appendChild(option);
+						});
+
+						var label = document.createElement("label");
+						label.setAttribute("for",Entree.name);
+
+						var texte = document.createTextNode(Entree.name+" :");
+						label.appendChild(texte);
+
+						var divImage = document.createElement("div");
+						divImage.setAttribute("id","Result");
+						divImage.setAttribute("class","flex");
+						divImage.classList.add("centre");
+
+						div.appendChild(label);
+						div.appendChild(element);
+						div.appendChild(divImage);
+					break;
+					case "tel" :
+						var element = document.createElement("input");
+						element.setAttribute("type",Entree.type);
+						element.setAttribute("name",Entree.name);
+						element.setAttribute("pattern",Entree.pattern);
+						element.setAttribute("placeholder","01 23 45 67 89");
+
+						var label = document.createElement("label");
+						label.setAttribute("for",Entree.name);
+
+						var texte = document.createTextNode(Entree.name+" :");
+						label.appendChild(texte);
+
+						div.appendChild(label);
+						div.appendChild(element);
+					break;
+					case "submit":
+						var element = document.createElement("button");
+						element.setAttribute("type",Entree.type);
+						element.setAttribute("name",Entree.name);
+						element.setAttribute("class","centre");
+						element.setAttribute("onclick",)
+
+						var texte = document.createTextNode("Envoyer");
+						element.appendChild(texte);
+
+						div.style.display = "inline";
+						div.appendChild(element);
+					break;
+					case "reset":
+						var element = document.createElement("button");
+						element.setAttribute("type",Entree.type);
+						element.setAttribute("name",Entree.name);
+						element.setAttribute("class","centre");
+
+						var texte = document.createTextNode("Réinitialiser");
+						element.appendChild(texte);
+
+						div.style.display = "inline";
+						div.appendChild(element);
+					break;
+					case "double-email" :
+						Object.keys(Entree.contenu).forEach(key =>
+						{
+							var monDiv = document.createElement("div");
+							
+							if(Entree.contenu[key].type=="mail")
+							{
+
+
+								var element = document.createElement("input");
+								element.setAttribute("type",Entree.contenu[key].type);
+								element.setAttribute("name",Entree.contenu[key].name);
+								monDiv.setAttribute("id",Entree.contenu[key].name);
+								
+								var label = document.createElement("label");
+								label.setAttribute("for",Entree.contenu[key].name);
+								label.setAttribute("id","label "+Entree.contenu[key].name);
+
+								var texte = document.createTextNode(Entree.contenu[key].name+" :");
+								label.appendChild(texte);
+
+								monDiv.appendChild(label);
+								monDiv.appendChild(element);
+							}
+							else
+							{
+								var element = document.createElement("input");
+								element.setAttribute("type",Entree.contenu[key].type);
+								element.setAttribute("name",Entree.contenu[key].name);
+								element.setAttribute("onclick","FusionMail()");
+								monDiv.setAttribute("id",Entree.contenu[key].name);
+
+								var label = document.createElement("label");
+								label.setAttribute("for",Entree.contenu[key].name);
+
+								var texte = document.createTextNode("Un seul mail ?");
+								label.appendChild(texte);
+
+								monDiv.appendChild(label);
+								monDiv.appendChild(element);
+							}
+							div.appendChild(monDiv);
+						});
+					break;
+					default:
+						div = document.createElement("div");
+						div.setAttribute("class","centre");
+						console.log(Entree);
+						element = document.createTextNode("");
+					break;
+				}
+				/*console.log(Formulaire);
+				console.log(Entree);*/
+				Fieldset.appendChild(div);
 			}
+			function FusionMail()
+			{
+				var Email1 = document.getElementById('Email1');
+				var Email2 = document.getElementById('Email2');
+				var RadioDoubleMail = document.getElementById('radioemail');
+				if (RadioDoubleMail!=null)
+					RadioDoubleMail.remove();
+				if(Email2!=null)
+					Email2.remove();
+				var label = document.getElementById('label Email1');
+				if (label!=null)
+					label.innerHTML = "Email :";
+				//console.log(Email1);
+				//console.log(Email2);
+			}
+
+			function getSelectResult(Select)
+			//Afficher le résultat sélectionner d'un select passé en argument.
+			{
+				let result =[];
+				for (var i=0; i<Select.length; i++)
+				{
+				    if (Select[i].selected)
+				    {
+				    	result.push(Select[i].value);
+				    }
+				}
+				return result;
+			}
+
+			function afficheResult(Select)
+			{
+				let result = getSelectResult(Select);
+
+				var Resultdiv=document.getElementById('Result');
+				Resultdiv.innerHTML="";
+
+				for (var i = result.length - 1; i >= 0; i--)
+				{
+					var divContenu = document.createElement("div");
+					divContenu.setAttribute("class","centre");
+					var imageContenu =  document.createElement("img");
+					imageContenu.setAttribute("src",result[i]);
+					imageContenu.setAttribute("class","image");
+					divContenu.appendChild(imageContenu);
+					Resultdiv.appendChild(divContenu);
+				}
+			}
+			function verifSaisie()
+			{
+				var form = document.getElementById('form');
+				var verif = true;
+
+				nom = document.getElementById("nom").value;
+				prenom = document.getElementById("prenom").value;
+				email= document.getElementById("email").value;
+				email2 = document.getElementById("email2").value;
+
+
+				if (document.querySelector('input[name="copier_email"]:checked')) {
+				copier = document.querySelector('input[name="copier_email"]:checked').value;
+				if (copier == "oui") {
+				email2 = email;
+				document.getElementById("email2").value = email2;
+				}
+				} else {
+				verif = false;
+				document.getElementById('copier_email').focus();
+				}
+
+				diplome= document.getElementById("diplome").value;
+				ddn=document.getElementById("ddn").value;
+				ddn = ddn.split("-");
+
+
+				if (diplome == '') {
+				verif = false;
+				document.getElementById('diplome').focus();
+				}
+
+				programmation=document.getElementsByName("programmation");
+				prog="";
+				for (var i = 0; i < programmation.length; i++) {
+				if (programmation[i].checked)
+				prog += programmation[i].value+" ";
+				}
+				if (prog == "") {
+				verif = false;
+				}
+
+				if (email == '' || !document.getElementById("email").checkValidity()) {
+				verif = false;
+				document.getElementById('email').focus();
+				}
+
+				if (document.querySelector('input[name="genre"]:checked')) {
+				genre= document.querySelector('input[name="genre"]:checked').value;
+				} else {
+				verif = false;
+				document.getElementById('genre').focus();
+				}
+
+				if (ddn == '') {
+				verif = false;
+				document.getElementById('ddn').focus();
+				}
+				if (prenom == '') {
+				verif = false;
+				document.getElementById('prenom').focus();
+				}
+				if (nom == '' ) {
+				verif = false;
+				document.getElementById('nom').focus();
+				}
+
+				if (verif == true) {
+				form.submit();
+				} else {
+				console.log('false');
+				}
+			}
+
 			/*
 				Date du jour (pas dans le form)
 
@@ -137,65 +518,6 @@
 	<BODY onload="init()">
 		<header><!--Identité : Logo, bannière--></header>
 		<h2 class="centre">Patate</h2>
-
-		<form id="form" name="form" action="JS_traitement_formulaire.html" method="get" class="centre">	
-		<!--La méthode get renvoie les informations dans l'url de la page ouverte, l'action possède l'adresse de la page à ouvrir.-->
-
-			<input type=hidden name="hidden" id="hidden" value="Bonjour"/>
-			<!--Un input caché contenant la valeur "Bonjour" pour pouvoir commencer à 1 lors de la récupération des informations..-->
-
-			<fieldset>
-				<legend>Informations Générales</legend>
-				<!--Légende relative à ces éléments du formulaire.-->
-				<label for="nom">Nom :</label> <input class="centre" type="text" name="nom" id="nom" maxlength="20" size="20"/><br/>
-				<!--Réception du Nom dans un input de type text et d'id nom.-->
-				<!--Le label permet d'associer le libellé au champ en renseignant son id.-->
-				<label for="prenom">Prénom :</label> <input class="centre" type="text" name="prenom" id="prenom" maxlength="20" size="20"/><br/> 
-				<!--Réception du Prénom dans un input de type text et d'id prenom.-->
-				<label for="ddn">Date de naissance :</label> <input class="centre" type="date" name="ddn" id="ddn"/><br/>
-				<!--Réception de la date de naissance dans un input de type date et d'id ddn.-->
-				<label for="ddn">Genre :</label>
-				<input class="centre" type="radio" name="genre" id ="genre" value ="Homme" checked="checked"/>Homme
-				<input class="centre" type="radio" name="genre" id ="genre" value="Femme" />Femme
-				<input class="centre" type="radio" name="genre" id ="genre" value ="Autre"/>Autre<br/>
-				<!--Réception du genre dans un input de type radio et d'id genre.-->
-			</fieldset>
-			<!--Le fieldset permet de regrouper divers éléments du formulaire et d'y associer une légende.-->
-
-			<fieldset>
-				<legend>Informations physiques</legend>
-				<label for="taille">Taille (cm) :</label><input class="centre" type="number" name="taille" id="taille" min="1" max="250" /><br/>
-				<!--Réception de la taille dans un input de type number et d'id taille.-->
-				<label for="poids">Poids (kg) :</label><input class="centre" type="number" name="poids" id="poids" min="1" max="600" /> <br />
-				<!--Réception du poids dans un input de type number et d'id poids.-->
-				<label for="frequenceSportif">Fréquence Sportive</label>
-					<select class="centre" name="frequenceSportif" id="frequenceSportif" size="1">
-						<option>Plus d'une fois par semaine
-						<option>Une fois par semaine
-						<option>Une fois par mois
-						<option>Une fois par trimestre
-						<option>Moins d'une fois par trimestre
-					</select>
-				<!--Réception de la fréquence sportive dans un input de type select et d'id frequenceSportif.-->
-			</fieldset>
-
-			<fieldset>
-				<legend>Informations de contact</legend>
-				<label for="mail">Email :</label> <input class="centre" type="mail" name="mail" id="mail" maxlength="40" size="20" placeholder="e-mail" /><br/>
-				<!--Réception de l'e-mail dans un input de type mail et d'id mail.-->
-				<!--Le placeholder permet d'afficher un texte dans le fond de l'espace prévu à la saisie utilisateur.-->
-				<label for="telephone">Téléphone :</label> <input class="centre" type="number" name="telephone" id="telephone" maxlength="20" /> <br />
-				<!--Réception du téléphone dans un input de type number et d'id telephone.-->
-				
-				<div ID="BoutonsFormulaires">
-					<input class="centre" class="boutonsFormulaires" type="reset" name="reset" id="reset" value="Reset"/>
-					<!--Réception de l'information d'annulation du contenu du formulaire dans un input de type reset et d'id reset.-->
-					<input class="centre" class="boutonsFormulaires" type="submit" name="submit" id="submit" value="Valider"/><!-- onClick=""/>-->
-					<!--Réception de l'information de soumission du contenu du formulaire dans un input de type submit et d'id submit.-->
-				</div>
-				<!--Boutons pour annuler ou soumettre la saisie.-->
-			</fieldset>
-		</form>
 		
 		<footer id="footer">
 			Contact : r.schlotter@ludus-académie.com<br/>
